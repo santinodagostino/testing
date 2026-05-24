@@ -9,7 +9,6 @@ import {
   officeName,
   stateName,
   ratingBadgeClass,
-  STATE_NAMES,
 } from '@/lib/format'
 import { Input } from '@/components/ui/input'
 import {

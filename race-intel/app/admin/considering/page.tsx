@@ -1,12 +1,12 @@
 import { db } from '@/db'
-import { consideringCandidates, races } from '@/db/schema'
-import { eq, desc, inArray } from 'drizzle-orm'
-import { stateName, officeName } from '@/lib/format'
+import { consideringCandidates } from '@/db/schema'
+import { eq, desc } from 'drizzle-orm'
 import ConsideringQueue from './considering-queue'
 
 export const dynamic = 'force-dynamic'
 
 export default async function ConsideringAdminPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let pending: any[] = [], published: any[] = [], rejected: any[] = []
   try {
   ;[pending, published, rejected] = await Promise.all([

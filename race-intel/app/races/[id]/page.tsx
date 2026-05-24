@@ -129,7 +129,7 @@ export default async function RaceDetailPage({
                 </div>
                 {c.quote && (
                   <p className="text-muted-foreground italic text-xs line-clamp-2">
-                    "{c.quote}"
+                    &ldquo;{c.quote}&rdquo;
                   </p>
                 )}
                 {c.sourcePublication && (

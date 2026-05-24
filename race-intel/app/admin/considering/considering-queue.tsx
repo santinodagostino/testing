@@ -158,7 +158,7 @@ function ItemCard({
 
       {item.quote && (
         <blockquote className="text-sm text-muted-foreground italic border-l-2 pl-3">
-          "{item.quote}"
+          &ldquo;{item.quote}&rdquo;
         </blockquote>
       )}
 

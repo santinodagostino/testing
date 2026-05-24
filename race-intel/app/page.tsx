@@ -13,7 +13,9 @@ const COMPETITIVE = new Set([
 
 export default async function HomePage() {
   let stats = { races: 0, candidates: 0, committees: 0, financials: 0 }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let topRatings: any[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let topCash: any[] = []
 
   try {
@@ -56,14 +58,15 @@ export default async function HomePage() {
       ORDER BY f.cash_on_hand DESC NULLS LAST
       LIMIT 10
     `)
-    topCash = cashResult.rows ?? (cashResult as any)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    topCash = (cashResult as any).rows ?? cashResult
   } catch {}
 
   const competitiveRaces = topRatings
     .filter(r => COMPETITIVE.has(r.rating))
     .slice(0, 12)
 
-  const hasCash = (topCash as any[]).length > 0
+  const hasCash = topCash.length > 0
 
   return (
     <div className="space-y-8 max-w-6xl">
@@ -171,7 +174,7 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="rounded-lg border divide-y">
-              {(topCash as any[]).map((c, i) => (
+              {topCash.map((c, i) => (
                 <Link
                   key={c.id}
                   href={c.race_id ? `/races/${c.race_id}` : '/races'}

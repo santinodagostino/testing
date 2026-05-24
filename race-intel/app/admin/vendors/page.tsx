@@ -1,14 +1,12 @@
 import { db } from '@/db'
 import { knownVendors, disbursements } from '@/db/schema'
 import { isNull, desc, sql } from 'drizzle-orm'
-import { vendorCategoryLabel } from '@/lib/format'
-import { formatCurrency } from '@/lib/format'
-import { Badge } from '@/components/ui/badge'
-import Link from 'next/link'
+import { vendorCategoryLabel, formatCurrency } from '@/lib/format'
 
 export const dynamic = 'force-dynamic'
 
 export default async function VendorsAdminPage() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let vendors: any[] = [], unmatched: any[] = []
   try {
   ;[vendors, unmatched] = await Promise.all([
