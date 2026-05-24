@@ -45,7 +45,7 @@ export default async function HomePage() {
       .orderBy(desc(raceRatings.capturedAt))
       .limit(50)
 
-    topCash = await db.execute(sql`
+    const cashResult = await db.execute(sql`
       SELECT c.id, c.full_name, c.party, c.state, c.office, c.district,
              c.race_id,
              f.cash_on_hand, f.total_receipts
@@ -56,6 +56,7 @@ export default async function HomePage() {
       ORDER BY f.cash_on_hand DESC NULLS LAST
       LIMIT 10
     `)
+    topCash = cashResult.rows ?? (cashResult as any)
   } catch {}
 
   const competitiveRaces = topRatings
