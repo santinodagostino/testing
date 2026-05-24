@@ -17,7 +17,7 @@ const API_KEY = process.env.FEC_API_KEY!
 // Stay safely under 1,000 req/hour: 1 req/5s = 720/hour
 const queue = new PQueue({ concurrency: 1, interval: 5000, intervalCap: 1 })
 
-async function fetchPage(path: string, params: Record<string, string | number>, retries = 5): Promise<any> {
+async function fetchPage(path: string, params: Record<string, string | number>, retries = 8): Promise<any> {
   const url = new URL(`${FEC_BASE}${path}`)
   url.searchParams.set('api_key', API_KEY)
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, String(v))
@@ -25,16 +25,17 @@ async function fetchPage(path: string, params: Record<string, string | number>, 
   for (let attempt = 0; attempt <= retries; attempt++) {
     const res = await fetch(url.toString())
     if (res.status === 429 || res.status === 403) {
-      const wait = Math.pow(2, attempt + 2) * 1000 // 4s, 8s, 16s, 32s, 64s
-      console.log(`Rate limited (${res.status}), waiting ${wait / 1000}s...`)
+      // Wait 10 min on rate limit — FEC limit resets hourly
+      const wait = 10 * 60 * 1000
+      console.log(`Rate limited (${res.status}) attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
       await new Promise(r => setTimeout(r, wait))
       continue
     }
     if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
     const data = await res.json()
     if (data?.error?.code === 'OVER_RATE_LIMIT') {
-      const wait = Math.pow(2, attempt + 2) * 1000
-      console.log(`OVER_RATE_LIMIT, waiting ${wait / 1000}s...`)
+      const wait = 10 * 60 * 1000
+      console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
       await new Promise(r => setTimeout(r, wait))
       continue
     }
