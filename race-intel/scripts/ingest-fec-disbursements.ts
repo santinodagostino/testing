@@ -3,75 +3,170 @@
  * Target: https://api.open.fec.gov/v1/schedules/schedule_b/
  * Last verified: 2026-05-24
  *
+ * Fetches bulk disbursements for 2026 across all our committees.
+ * Uses cursor-based pagination and stays under 1,000 req/hour FEC limit.
+ *
  * Usage: npx tsx scripts/ingest-fec-disbursements.ts
  */
 import 'dotenv/config'
 import { db } from '../db'
-import { committees, disbursements } from '../db/schema'
+import { committees, disbursements, knownVendors, candidateVendors } from '../db/schema'
+import { inArray, eq } from 'drizzle-orm'
 import PQueue from 'p-queue'
 
 const FEC_BASE = 'https://api.open.fec.gov/v1'
 const API_KEY = process.env.FEC_API_KEY!
-const queue = new PQueue({ concurrency: 2, interval: 1000, intervalCap: 2 })
 
-async function fetchFec(path: string, params: Record<string, string | number> = {}): Promise<any> {
+// 1 req/5s = 720/hour, safely under 1000/hour
+const queue = new PQueue({ concurrency: 1, interval: 5000, intervalCap: 1 })
+
+async function fetchFec(path: string, params: Record<string, string | number> = {}, retries = 8): Promise<any> {
   const url = new URL(`${FEC_BASE}${path}`)
   url.searchParams.set('api_key', API_KEY)
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, String(v))
-  const res = await fetch(url.toString())
-  if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
-  return res.json()
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url.toString())
+    if (res.status === 429 || res.status === 403) {
+      const wait = 10 * 60 * 1000
+      console.log(`Rate limited (${res.status}) attempt ${attempt + 1}, waiting 10 min...`)
+      await new Promise(r => setTimeout(r, wait))
+      continue
+    }
+    if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
+    const data = await res.json()
+    if (data?.error?.code === 'OVER_RATE_LIMIT') {
+      console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}, waiting 10 min...`)
+      await new Promise(r => setTimeout(r, 10 * 60 * 1000))
+      continue
+    }
+    return data
+  }
+  throw new Error(`Rate limit persists after ${retries} retries`)
 }
 
-async function ingestCommitteeDisbursements(committeeId: string, dbCommitteeId: string) {
-  let lastIndex: string | null = null
-  let page = 0
-
-  while (true) {
-    const params: Record<string, string | number> = {
-      committee_id: committeeId,
-      two_year_transaction_period: 2026,
-      per_page: 100,
-      sort: '-disbursement_date',
-    }
-    if (lastIndex) params['last_index'] = lastIndex
-
-    const data = await queue.add(() => fetchFec('/schedules/schedule_b/', params)) as any
-    const results: any[] = data.results ?? []
-    if (results.length === 0) break
-
-    await db.insert(disbursements).values(
-      results.map((d: any) => ({
-        committeeId: dbCommitteeId,
-        payeeName: d.recipient_name ?? 'UNKNOWN',
-        amount: d.disbursement_amount?.toString() ?? '0',
-        date: d.disbursement_date ? new Date(d.disbursement_date) : null,
-        purpose: d.disbursement_description,
-      }))
-    ).onConflictDoNothing()
-
-    page++
-    console.log(`  ${committeeId}: page ${page}, ${results.length} rows`)
-    if (results.length < 100) break
-    lastIndex = data.pagination?.last_indexes?.last_index
-    if (!lastIndex) break
-  }
+// Normalize payee names for vendor matching
+function normalizeName(name: string): string {
+  return name.toUpperCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
 async function run() {
   if (!API_KEY) throw new Error('FEC_API_KEY not set')
 
-  const allCommittees = await db.query.committees.findMany()
+  const allCommittees = await db.select().from(committees)
+  if (allCommittees.length === 0) {
+    console.log('No committees found. Run ingest:financials first.')
+    return
+  }
   console.log(`Processing ${allCommittees.length} committees...`)
 
-  for (const comm of allCommittees) {
-    try {
-      await ingestCommitteeDisbursements(comm.fecId, comm.id)
-    } catch (err: any) {
-      console.error(`Error for committee ${comm.fecId}: ${err.message}`)
+  const committeeIds = allCommittees.map(c => c.fecId)
+  let totalInserted = 0
+  let page = 0
+
+  // Use bulk endpoint with committee_id[] filter
+  let lastIndex: string | null = null
+  let lastDisbursementDate: string | null = null
+
+  while (true) {
+    const params: Record<string, string | number | string[]> = {
+      two_year_transaction_period: 2026,
+      per_page: 100,
+      sort: '-disbursement_date',
     }
+    // Add all committee IDs
+    const urlParams = new URLSearchParams()
+    urlParams.set('api_key', API_KEY)
+    urlParams.set('two_year_transaction_period', '2026')
+    urlParams.set('per_page', '100')
+    urlParams.set('sort', '-disbursement_date')
+    for (const id of committeeIds) urlParams.append('committee_id[]', id)
+    if (lastIndex) urlParams.set('last_index', lastIndex)
+    if (lastDisbursementDate) urlParams.set('last_disbursement_date', lastDisbursementDate)
+
+    const url = new URL(`${FEC_BASE}/schedules/schedule_b/`)
+    url.search = urlParams.toString()
+
+    const data = await queue.add(async () => {
+      for (let attempt = 0; attempt <= 8; attempt++) {
+        const res = await fetch(url.toString())
+        if (res.status === 429 || res.status === 403) {
+          console.log(`Rate limited attempt ${attempt + 1}, waiting 10 min...`)
+          await new Promise(r => setTimeout(r, 10 * 60 * 1000))
+          continue
+        }
+        if (!res.ok) throw new Error(`FEC ${res.status}`)
+        const d = await res.json()
+        if (d?.error?.code === 'OVER_RATE_LIMIT') {
+          console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}, waiting 10 min...`)
+          await new Promise(r => setTimeout(r, 10 * 60 * 1000))
+          continue
+        }
+        return d
+      }
+      throw new Error('Rate limit persists')
+    }) as any
+
+    const results: any[] = data.results ?? []
+    if (results.length === 0) break
+
+    // Build committee fecId -> dbId map
+    const commMap = new Map(allCommittees.map(c => [c.fecId, c.id]))
+
+    const rows = results
+      .map((d: any) => {
+        const dbCommId = commMap.get(d.committee_id)
+        if (!dbCommId) return null
+        return {
+          committeeId: dbCommId,
+          payeeName: d.recipient_name ?? 'UNKNOWN',
+          amount: d.disbursement_amount?.toString() ?? '0',
+          date: d.disbursement_date ? new Date(d.disbursement_date) : null,
+          purpose: d.disbursement_description,
+        }
+      })
+      .filter(Boolean) as any[]
+
+    if (rows.length > 0) {
+      await db.insert(disbursements).values(rows).onConflictDoNothing()
+      totalInserted += rows.length
+    }
+
+    page++
+    console.log(`Page ${page}: +${rows.length} disbursements (total: ${totalInserted})`)
+
+    if (results.length < 100) break
+    lastIndex = data.pagination?.last_indexes?.last_index
+    lastDisbursementDate = data.pagination?.last_indexes?.last_disbursement_date
+    if (!lastIndex) break
   }
 
+  console.log(`\nTotal disbursements inserted: ${totalInserted}`)
+
+  // --- Vendor matching ---
+  console.log('\nMatching vendors...')
+  const vendors = await db.select().from(knownVendors)
+  const allDisbursements = await db.select().from(disbursements)
+
+  let matched = 0
+  for (const v of vendors) {
+    const names = [v.canonicalName, ...(v.aliases ?? [])].map(normalizeName)
+    const matches = allDisbursements.filter(d =>
+      names.includes(normalizeName(d.payeeName))
+    )
+    if (matches.length === 0) continue
+
+    for (const d of matches) {
+      await db.update(disbursements)
+        .set({ vendorId: v.id, category: v.category })
+        .where(eq(disbursements.id, d.id))
+    }
+    matched += matches.length
+  }
+  console.log(`Matched ${matched} disbursements to known vendors`)
+
+  // --- Update disbursements.vendorId and populate candidateVendors ---
+  // (candidateVendors aggregation would go here)
   console.log('Done.')
 }
 
