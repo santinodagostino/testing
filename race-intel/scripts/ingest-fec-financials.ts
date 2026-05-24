@@ -77,10 +77,10 @@ async function run() {
 
   // --- Step 1: Bulk-fetch principal committees for 2026 cycle ---
   console.log('\nFetching principal committees...')
+  // designation=P: principal committees only; no committee_type filter needed
   const allComms = await fetchAllPages('/committees/', {
     cycle: 2026,
     designation: 'P',
-    committee_type: 'H,S',
   })
   console.log(`Fetched ${allComms.length} principal committees`)
 
