@@ -33,6 +33,7 @@ export type RaceSummary = {
 }
 
 export async function getRacesSummary(cycle = 2026): Promise<RaceSummary[]> {
+  try {
   const raceList = await db
     .select()
     .from(races)
@@ -142,6 +143,9 @@ export async function getRacesSummary(cycle = 2026): Promise<RaceSummary[]> {
       topDCash,
     }
   })
+  } catch {
+    return []
+  }
 }
 
 // ─── Race Detail ───────────────────────────────────────────────────────────────
@@ -196,6 +200,7 @@ export type RaceDetail = {
 }
 
 export async function getRaceDetail(id: string): Promise<RaceDetail | null> {
+  try {
   const [race] = await db.select().from(races).where(eq(races.id, id))
   if (!race) return null
 
@@ -353,5 +358,8 @@ export async function getRaceDetail(id: string): Promise<RaceDetail | null> {
       sourcePublication: c.sourcePublication,
       extractedAt: c.extractedAt?.toISOString() ?? null,
     })),
+  }
+  } catch {
+    return null
   }
 }

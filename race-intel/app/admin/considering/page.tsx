@@ -7,7 +7,9 @@ import ConsideringQueue from './considering-queue'
 export const dynamic = 'force-dynamic'
 
 export default async function ConsideringAdminPage() {
-  const [pending, published, rejected] = await Promise.all([
+  let pending: any[] = [], published: any[] = [], rejected: any[] = []
+  try {
+  ;[pending, published, rejected] = await Promise.all([
     db
       .select()
       .from(consideringCandidates)
@@ -28,6 +30,7 @@ export default async function ConsideringAdminPage() {
       .orderBy(desc(consideringCandidates.extractedAt))
       .limit(10),
   ])
+  } catch { /* DB unavailable — show empty state */ }
 
   const items = [...pending, ...published, ...rejected].map(c => ({
     id: c.id,

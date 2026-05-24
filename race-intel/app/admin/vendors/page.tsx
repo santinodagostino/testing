@@ -9,7 +9,9 @@ import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 
 export default async function VendorsAdminPage() {
-  const [vendors, unmatched] = await Promise.all([
+  let vendors: any[] = [], unmatched: any[] = []
+  try {
+  ;[vendors, unmatched] = await Promise.all([
     db
       .select()
       .from(knownVendors)
@@ -28,6 +30,7 @@ export default async function VendorsAdminPage() {
       .orderBy(desc(sql`sum(${disbursements.amount})`))
       .limit(50),
   ])
+  } catch { /* DB unavailable — show empty state */ }
 
   const byCategory = vendors.reduce<Record<string, typeof vendors>>(
     (acc, v) => {
