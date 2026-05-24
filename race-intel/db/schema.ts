@@ -30,7 +30,7 @@ export const races = pgTable('races', {
 
 export const candidates = pgTable('candidates', {
   id: uuid('id').primaryKey().defaultRandom(),
-  fecId: varchar('fec_id', { length: 20 }),
+  fecId: varchar('fec_id', { length: 20 }).unique(),
   fullName: text('full_name').notNull(),
   party: varchar('party', { length: 10 }),
   state: varchar('state', { length: 2 }).notNull(),

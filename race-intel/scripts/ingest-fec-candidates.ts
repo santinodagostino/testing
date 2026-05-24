@@ -90,7 +90,7 @@ async function run() {
         status: 'declared',
         source: 'fec',
       }).onConflictDoUpdate({
-        target: candidates.fecId as any,
+        target: candidates.fecId,
         set: {
           fullName: c.name,
           party: c.party,
