@@ -1,11 +1,14 @@
-export default function MapPage() {
+import { getRacesSummary } from '@/lib/queries'
+import MapView from './map-view'
+
+export const dynamic = 'force-dynamic'
+
+export default async function MapPage() {
+  const races = await getRacesSummary(2026)
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">2026 Race Map</h1>
-      <p className="text-muted-foreground">US map — Phase 5</p>
-      <div className="h-[600px] bg-muted rounded-xl flex items-center justify-center text-muted-foreground">
-        Map coming in Phase 5
-      </div>
+      <MapView races={races} />
     </div>
-  );
+  )
 }
