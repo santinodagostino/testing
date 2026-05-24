@@ -39,7 +39,7 @@ export const candidates = pgTable('candidates', {
   raceId: uuid('race_id').references(() => races.id),
   status: candidateStatusEnum('status').notNull().default('declared'),
   photoUrl: text('photo_url'),
-  bioguideId: varchar('bioguide_id', { length: 20 }),
+  bioguideId: varchar('bioguide_id', { length: 20 }).unique(),
   source: sourceEnum('source').notNull().default('fec'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),

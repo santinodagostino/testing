@@ -82,7 +82,7 @@ async function run() {
         bioguideId: m.bioguideId,
         source: 'fec',
       }).onConflictDoUpdate({
-        target: candidates.bioguideId as any,
+        target: candidates.bioguideId,
         set: { status: 'incumbent', raceId, updatedAt: new Date() },
       }).catch(() => {})
     }
