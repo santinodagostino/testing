@@ -47,7 +47,7 @@ export const candidates = pgTable('candidates', {
 
 export const committees = pgTable('committees', {
   id: uuid('id').primaryKey().defaultRandom(),
-  fecId: varchar('fec_id', { length: 20 }).notNull(),
+  fecId: varchar('fec_id', { length: 20 }).notNull().unique(),
   candidateId: uuid('candidate_id').references(() => candidates.id),
   committeeType: varchar('committee_type', { length: 10 }),
   treasurerName: text('treasurer_name'),
@@ -143,7 +143,7 @@ export const sources = pgTable('sources', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
   type: sourceTypeEnum('type').notNull(),
-  url: text('url').notNull(),
+  url: text('url').notNull().unique(),
   lastPolled: timestamp('last_polled'),
   pollingCadenceHours: integer('polling_cadence_hours').default(24),
   category: varchar('category', { length: 30 }),

@@ -1,91 +1,139 @@
 /**
- * Ingest FEC financial totals for all 2026 principal committees.
- * Target: https://api.open.fec.gov/v1/candidate/{id}/totals/?cycle=2026
- * Last verified: 2026-05-24
+ * Ingest FEC financial totals using bulk endpoints (far fewer API calls).
+ * - /committees/?cycle=2026            → all committees (~25 pages)
+ * - /candidates/totals/?cycle=2026     → all totals (~25 pages)
  *
  * Usage: npx tsx scripts/ingest-fec-financials.ts
  */
 import 'dotenv/config'
 import { db } from '../db'
 import { candidates, committees, financials } from '../db/schema'
-import { isNotNull } from 'drizzle-orm'
+import { inArray } from 'drizzle-orm'
 import PQueue from 'p-queue'
 
 const FEC_BASE = 'https://api.open.fec.gov/v1'
 const API_KEY = process.env.FEC_API_KEY!
-const queue = new PQueue({ concurrency: 2, interval: 1000, intervalCap: 2 })
 
-async function fetchFec(path: string, params: Record<string, string | number> = {}): Promise<any> {
+// Stay safely under 1,000 req/hour: 1 req/5s = 720/hour
+const queue = new PQueue({ concurrency: 1, interval: 5000, intervalCap: 1 })
+
+async function fetchPage(path: string, params: Record<string, string | number>, retries = 5): Promise<any> {
   const url = new URL(`${FEC_BASE}${path}`)
   url.searchParams.set('api_key', API_KEY)
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, String(v))
-  const res = await fetch(url.toString())
-  if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
-  return res.json()
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url.toString())
+    if (res.status === 429 || res.status === 403) {
+      const wait = Math.pow(2, attempt + 2) * 1000 // 4s, 8s, 16s, 32s, 64s
+      console.log(`Rate limited (${res.status}), waiting ${wait / 1000}s...`)
+      await new Promise(r => setTimeout(r, wait))
+      continue
+    }
+    if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
+    const data = await res.json()
+    if (data?.error?.code === 'OVER_RATE_LIMIT') {
+      const wait = Math.pow(2, attempt + 2) * 1000
+      console.log(`OVER_RATE_LIMIT, waiting ${wait / 1000}s...`)
+      await new Promise(r => setTimeout(r, wait))
+      continue
+    }
+    return data
+  }
+  throw new Error(`FEC rate limit persists after ${retries} retries`)
+}
+
+async function fetchAllPages(path: string, extraParams: Record<string, string | number> = {}): Promise<any[]> {
+  let page = 1
+  let total = Infinity
+  const results: any[] = []
+
+  while (results.length < total) {
+    const data = await queue.add(() =>
+      fetchPage(path, { per_page: 100, page, ...extraParams })
+    ) as any
+    total = data.pagination?.count ?? 0
+    const batch = data.results ?? []
+    results.push(...batch)
+    console.log(`  ${path} page ${page}: ${results.length}/${total}`)
+    page++
+    if (batch.length < 100) break
+  }
+  return results
 }
 
 async function run() {
   if (!API_KEY) throw new Error('FEC_API_KEY not set')
 
-  const allCandidates = await db.query.candidates.findMany({
-    where: isNotNull(candidates.fecId),
+  // Fetch all known FEC IDs from our candidates table
+  const allCandidates = await db.select({
+    id: candidates.id,
+    fecId: candidates.fecId,
+  }).from(candidates)
+
+  const fecIdToDbId = new Map(allCandidates.map(c => [c.fecId!, c.id]))
+  console.log(`Loaded ${fecIdToDbId.size} candidates from DB`)
+
+  // --- Step 1: Bulk-fetch principal committees for 2026 cycle ---
+  console.log('\nFetching principal committees...')
+  const allComms = await fetchAllPages('/committees/', {
+    cycle: 2026,
+    designation: 'P',
+    committee_type: 'H,S',
   })
+  console.log(`Fetched ${allComms.length} principal committees`)
 
-  console.log(`Processing ${allCandidates.length} candidates...`)
-  let done = 0
+  // Upsert committees that match our candidates
+  let commUpserted = 0
+  for (const c of allComms) {
+    const candidateIds: string[] = c.candidate_ids ?? []
+    const matchedDbId = candidateIds.map(id => fecIdToDbId.get(id)).find(Boolean)
+    if (!matchedDbId) continue
 
-  for (const cand of allCandidates) {
-    await queue.add(async () => {
-      try {
-        // Get committees for this candidate
-        const commData = await fetchFec(`/candidate/${cand.fecId}/committees/`, { cycle: 2026 })
-        const principalComm = (commData.results ?? []).find((c: any) => c.designation === 'P')
-        if (!principalComm) return
-
-        // Upsert committee
-        const [comm] = await db.insert(committees).values({
-          fecId: principalComm.committee_id,
-          candidateId: cand.id,
-          committeeType: principalComm.committee_type,
-          treasurerName: principalComm.treasurer_name,
-          address: [
-            principalComm.street_1,
-            principalComm.city,
-            principalComm.state,
-            principalComm.zip,
-          ].filter(Boolean).join(', '),
-        }).onConflictDoUpdate({
-          target: committees.fecId as any,
-          set: { candidateId: cand.id, updatedAt: new Date() },
-        }).returning()
-
-        // Get totals
-        const totalsData = await fetchFec(`/candidate/${cand.fecId}/totals/`, { cycle: 2026 })
-        const totals = totalsData.results?.[0]
-        if (!totals) return
-
-        const burnRate = totals.total_receipts > 0
-          ? totals.total_disbursements / totals.total_receipts
-          : null
-
-        await db.insert(financials).values({
-          committeeId: comm.id,
-          cashOnHand: totals.cash_on_hand_end_period?.toString(),
-          totalReceipts: totals.receipts?.toString(),
-          totalDisbursements: totals.disbursements?.toString(),
-          burnRate: burnRate?.toFixed(4),
-          debt: totals.debts_owed_by_committee?.toString(),
-        })
-      } catch (err: any) {
-        console.error(`Error for ${cand.fecId}: ${err.message}`)
-      }
+    await db.insert(committees).values({
+      fecId: c.committee_id,
+      candidateId: matchedDbId,
+      committeeType: c.committee_type,
+      treasurerName: c.treasurer_name,
+      address: [c.street_1, c.city, c.state, c.zip].filter(Boolean).join(', '),
+    }).onConflictDoUpdate({
+      target: committees.fecId,
+      set: { candidateId: matchedDbId, updatedAt: new Date() },
     })
-
-    done++
-    if (done % 50 === 0) console.log(`${done}/${allCandidates.length}`)
+    commUpserted++
   }
+  console.log(`Upserted ${commUpserted} committees`)
 
-  await queue.onIdle()
+  // --- Step 2: Bulk-fetch candidate totals for 2026 cycle ---
+  console.log('\nFetching candidate totals...')
+  const allTotals = await fetchAllPages('/candidates/totals/', {
+    cycle: 2026,
+    election_full: 'false',
+  })
+  console.log(`Fetched ${allTotals.length} totals`)
+
+  // Load committees we just upserted
+  const dbComms = await db.select().from(committees)
+  const fecCommIdToComm = new Map(dbComms.map(c => [c.fecId, c]))
+
+  let finUpserted = 0
+  for (const t of allTotals) {
+    const comm = fecCommIdToComm.get(t.committee_id)
+    if (!comm) continue
+
+    const burnRate = t.receipts > 0 ? t.disbursements / t.receipts : null
+
+    await db.insert(financials).values({
+      committeeId: comm.id,
+      cashOnHand: t.cash_on_hand_end_period?.toString(),
+      totalReceipts: t.receipts?.toString(),
+      totalDisbursements: t.disbursements?.toString(),
+      burnRate: burnRate?.toFixed(4),
+      debt: t.debts_owed_by_committee?.toString(),
+    }).onConflictDoNothing()
+    finUpserted++
+  }
+  console.log(`\nInserted ${finUpserted} financial records`)
   console.log('Done.')
 }
 
