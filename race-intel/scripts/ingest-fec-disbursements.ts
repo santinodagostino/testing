@@ -11,7 +11,7 @@
 import 'dotenv/config'
 import { db } from '../db'
 import { committees, disbursements, knownVendors, candidateVendors } from '../db/schema'
-import { inArray, eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import PQueue from 'p-queue'
 
 const FEC_BASE = 'https://api.open.fec.gov/v1'
@@ -165,8 +165,46 @@ async function run() {
   }
   console.log(`Matched ${matched} disbursements to known vendors`)
 
-  // --- Update disbursements.vendorId and populate candidateVendors ---
-  // (candidateVendors aggregation would go here)
+  // --- Populate candidateVendors from matched disbursements ---
+  console.log('\nAggregating candidate vendors...')
+  const commToCand = new Map(allCommittees.map(c => [c.id, c.candidateId]))
+
+  const matchedDisbs = await db.select().from(disbursements)
+    .where(sql`${disbursements.vendorId} IS NOT NULL`)
+
+  // Group by (candidateId, vendorId)
+  type Key = string
+  const agg = new Map<Key, { candidateId: string; vendorId: string; category: string; total: number; first: Date | null; last: Date | null }>()
+
+  for (const d of matchedDisbs) {
+    const candidateId = commToCand.get(d.committeeId ?? '')
+    if (!candidateId || !d.vendorId || !d.category) continue
+    const key = `${candidateId}::${d.vendorId}`
+    if (!agg.has(key)) {
+      agg.set(key, { candidateId, vendorId: d.vendorId, category: d.category, total: 0, first: null, last: null })
+    }
+    const row = agg.get(key)!
+    row.total += parseFloat(d.amount)
+    const dt = d.date
+    if (dt) {
+      if (!row.first || dt < row.first) row.first = dt
+      if (!row.last || dt > row.last) row.last = dt
+    }
+  }
+
+  let cvInserted = 0
+  for (const row of Array.from(agg.values())) {
+    await db.insert(candidateVendors).values({
+      candidateId: row.candidateId,
+      vendorId: row.vendorId,
+      category: row.category as typeof candidateVendors.$inferInsert['category'],
+      totalSpentCycle: row.total.toFixed(2),
+      firstPayment: row.first,
+      lastPayment: row.last,
+    }).onConflictDoNothing()
+    cvInserted++
+  }
+  console.log(`Inserted/updated ${cvInserted} candidate-vendor relationships`)
   console.log('Done.')
 }
 
