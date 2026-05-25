@@ -23,25 +23,31 @@ async function fetchPage(path: string, params: Record<string, string | number>, 
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, String(v))
 
   for (let attempt = 0; attempt <= retries; attempt++) {
-    const res = await fetch(url.toString())
-    if (res.status === 429 || res.status === 403) {
-      // Wait 10 min on rate limit — FEC limit resets hourly
-      const wait = 10 * 60 * 1000
-      console.log(`Rate limited (${res.status}) attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
+    try {
+      const res = await fetch(url.toString())
+      if (res.status === 429 || res.status === 403) {
+        const wait = 10 * 60 * 1000
+        console.log(`Rate limited (${res.status}) attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
+        await new Promise(r => setTimeout(r, wait))
+        continue
+      }
+      if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
+      const data = await res.json()
+      if (data?.error?.code === 'OVER_RATE_LIMIT') {
+        const wait = 10 * 60 * 1000
+        console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
+        await new Promise(r => setTimeout(r, wait))
+        continue
+      }
+      return data
+    } catch (err: any) {
+      if (err.message?.startsWith('FEC ')) throw err
+      const wait = Math.min(5000 * 2 ** attempt, 60000)
+      console.log(`Network error attempt ${attempt + 1}/${retries + 1}: ${err.message}, retrying in ${wait / 1000}s...`)
       await new Promise(r => setTimeout(r, wait))
-      continue
     }
-    if (!res.ok) throw new Error(`FEC ${res.status} ${url}`)
-    const data = await res.json()
-    if (data?.error?.code === 'OVER_RATE_LIMIT') {
-      const wait = 10 * 60 * 1000
-      console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}/${retries + 1}, waiting 10 min...`)
-      await new Promise(r => setTimeout(r, wait))
-      continue
-    }
-    return data
   }
-  throw new Error(`FEC rate limit persists after ${retries} retries`)
+  throw new Error(`FEC request failed after ${retries} retries`)
 }
 
 async function fetchAllPages(path: string, extraParams: Record<string, string | number> = {}): Promise<any[]> {
