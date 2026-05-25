@@ -57,5 +57,6 @@ export async function createManualCandidate(formData: FormData) {
   })
 
   revalidatePath('/races')
-  redirect('/races')
+  revalidatePath(`/races/${raceId}`)
+  redirect(`/races/${raceId}`)
 }
