@@ -119,13 +119,16 @@ async function run() {
   })
   console.log(`Fetched ${allTotals.length} totals`)
 
-  // Load committees we just upserted
+  // Load committees we just upserted; match totals by candidate_id
   const dbComms = await db.select().from(committees)
-  const fecCommIdToComm = new Map(dbComms.map(c => [c.fecId, c]))
+  // candidateId (db uuid) → committee row
+  const dbCandIdToComm = new Map(dbComms.map(c => [c.candidateId, c]))
 
   let finUpserted = 0
   for (const t of allTotals) {
-    const comm = fecCommIdToComm.get(t.committee_id)
+    // totals are keyed by candidate_id (FEC id like "H1AL01042")
+    const dbCandId = fecIdToDbId.get(t.candidate_id)
+    const comm = dbCandId ? dbCandIdToComm.get(dbCandId) : undefined
     if (!comm) continue
 
     const burnRate = t.receipts > 0 ? t.disbursements / t.receipts : null
