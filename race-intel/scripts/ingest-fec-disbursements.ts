@@ -61,84 +61,92 @@ async function run() {
   console.log(`Processing ${allCommittees.length} committees...`)
 
   const committeeIds = allCommittees.map(c => c.fecId)
+  const commMap = new Map(allCommittees.map(c => [c.fecId, c.id]))
   let totalInserted = 0
-  let page = 0
+  let pageGlobal = 0
 
-  // Use bulk endpoint with committee_id[] filter
-  let lastIndex: string | null = null
-  let lastDisbursementDate: string | null = null
+  // 2,325 IDs in one URL causes HTTP 431; batch to stay under limit
+  const BATCH_SIZE = 50
+  for (let batchStart = 0; batchStart < committeeIds.length; batchStart += BATCH_SIZE) {
+    const batchIds = committeeIds.slice(batchStart, batchStart + BATCH_SIZE)
+    let lastIndex: string | null = null
+    let lastDisbursementDate: string | null = null
+    const batchNum = Math.floor(batchStart / BATCH_SIZE) + 1
+    const totalBatches = Math.ceil(committeeIds.length / BATCH_SIZE)
+    console.log(`Batch ${batchNum}/${totalBatches} (${batchIds.length} committees)`)
 
-  while (true) {
-    const params: Record<string, string | number | string[]> = {
-      two_year_transaction_period: 2026,
-      per_page: 100,
-      sort: '-disbursement_date',
-    }
-    // Add all committee IDs
-    const urlParams = new URLSearchParams()
-    urlParams.set('api_key', API_KEY)
-    urlParams.set('two_year_transaction_period', '2026')
-    urlParams.set('per_page', '100')
-    urlParams.set('sort', '-disbursement_date')
-    for (const id of committeeIds) urlParams.append('committee_id[]', id)
-    if (lastIndex) urlParams.set('last_index', lastIndex)
-    if (lastDisbursementDate) urlParams.set('last_disbursement_date', lastDisbursementDate)
+    while (true) {
+      const urlParams = new URLSearchParams()
+      urlParams.set('api_key', API_KEY)
+      urlParams.set('two_year_transaction_period', '2026')
+      urlParams.set('per_page', '100')
+      urlParams.set('sort', '-disbursement_date')
+      for (const id of batchIds) urlParams.append('committee_id[]', id)
+      if (lastIndex) urlParams.set('last_index', lastIndex)
+      if (lastDisbursementDate) urlParams.set('last_disbursement_date', lastDisbursementDate)
 
-    const url = new URL(`${FEC_BASE}/schedules/schedule_b/`)
-    url.search = urlParams.toString()
+      const url = new URL(`${FEC_BASE}/schedules/schedule_b/`)
+      url.search = urlParams.toString()
 
-    const data = await queue.add(async () => {
-      for (let attempt = 0; attempt <= 8; attempt++) {
-        const res = await fetch(url.toString())
-        if (res.status === 429 || res.status === 403) {
-          console.log(`Rate limited attempt ${attempt + 1}, waiting 10 min...`)
-          await new Promise(r => setTimeout(r, 10 * 60 * 1000))
-          continue
+      const data = await queue.add(async () => {
+        for (let attempt = 0; attempt <= 8; attempt++) {
+          try {
+            const res = await fetch(url.toString())
+            if (res.status === 429 || res.status === 403) {
+              console.log(`Rate limited attempt ${attempt + 1}, waiting 10 min...`)
+              await new Promise(r => setTimeout(r, 10 * 60 * 1000))
+              continue
+            }
+            if (!res.ok) throw new Error(`FEC ${res.status}`)
+            const d = await res.json()
+            if (d?.error?.code === 'OVER_RATE_LIMIT') {
+              console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}, waiting 10 min...`)
+              await new Promise(r => setTimeout(r, 10 * 60 * 1000))
+              continue
+            }
+            return d
+          } catch (err: any) {
+            if (err.message?.startsWith('FEC ')) throw err
+            const wait = Math.min(5000 * 2 ** attempt, 60000)
+            console.log(`Network error attempt ${attempt + 1}: ${err.message}, retrying in ${wait / 1000}s...`)
+            await new Promise(r => setTimeout(r, wait))
+          }
         }
-        if (!res.ok) throw new Error(`FEC ${res.status}`)
-        const d = await res.json()
-        if (d?.error?.code === 'OVER_RATE_LIMIT') {
-          console.log(`OVER_RATE_LIMIT attempt ${attempt + 1}, waiting 10 min...`)
-          await new Promise(r => setTimeout(r, 10 * 60 * 1000))
-          continue
-        }
-        return d
+        throw new Error('Rate limit persists')
+      }) as any
+
+      const results: any[] = data.results ?? []
+      if (results.length === 0) break
+
+      const rows = results
+        .map((d: any) => {
+          const dbCommId = commMap.get(d.committee_id)
+          if (!dbCommId) return null
+          return {
+            committeeId: dbCommId,
+            payeeName: d.recipient_name ?? 'UNKNOWN',
+            amount: d.disbursement_amount?.toString() ?? '0',
+            date: d.disbursement_date ? new Date(d.disbursement_date) : null,
+            purpose: d.disbursement_description,
+          }
+        })
+        .filter(Boolean) as any[]
+
+      if (rows.length > 0) {
+        await db.insert(disbursements).values(rows).onConflictDoNothing()
+        totalInserted += rows.length
       }
-      throw new Error('Rate limit persists')
-    }) as any
 
-    const results: any[] = data.results ?? []
-    if (results.length === 0) break
+      pageGlobal++
+      if (pageGlobal % 10 === 0) {
+        console.log(`  Page ${pageGlobal}: +${rows.length} (total: ${totalInserted})`)
+      }
 
-    // Build committee fecId -> dbId map
-    const commMap = new Map(allCommittees.map(c => [c.fecId, c.id]))
-
-    const rows = results
-      .map((d: any) => {
-        const dbCommId = commMap.get(d.committee_id)
-        if (!dbCommId) return null
-        return {
-          committeeId: dbCommId,
-          payeeName: d.recipient_name ?? 'UNKNOWN',
-          amount: d.disbursement_amount?.toString() ?? '0',
-          date: d.disbursement_date ? new Date(d.disbursement_date) : null,
-          purpose: d.disbursement_description,
-        }
-      })
-      .filter(Boolean) as any[]
-
-    if (rows.length > 0) {
-      await db.insert(disbursements).values(rows).onConflictDoNothing()
-      totalInserted += rows.length
+      if (results.length < 100) break
+      lastIndex = data.pagination?.last_indexes?.last_index
+      lastDisbursementDate = data.pagination?.last_indexes?.last_disbursement_date
+      if (!lastIndex) break
     }
-
-    page++
-    console.log(`Page ${page}: +${rows.length} disbursements (total: ${totalInserted})`)
-
-    if (results.length < 100) break
-    lastIndex = data.pagination?.last_indexes?.last_index
-    lastDisbursementDate = data.pagination?.last_indexes?.last_disbursement_date
-    if (!lastIndex) break
   }
 
   console.log(`\nTotal disbursements inserted: ${totalInserted}`)
