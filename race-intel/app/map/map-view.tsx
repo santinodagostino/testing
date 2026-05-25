@@ -278,8 +278,19 @@ function StatePanel({ info }: { info: StateInfo }) {
       </div>
 
       <div className="space-y-1 pt-1 border-t">
-        <p className="text-xs text-muted-foreground font-medium">Races</p>
-        {info.races.map(race => (
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-muted-foreground font-medium">Races</p>
+          <Link
+            href={`/races?state=${info.abbr}`}
+            className="text-xs text-primary hover:underline"
+          >
+            View all →
+          </Link>
+        </div>
+        {info.races
+          .filter(r => r.office !== 'house')
+          .concat(info.races.filter(r => r.office === 'house').slice(0, 3))
+          .map(race => (
           <Link
             key={race.id}
             href={`/races/${race.id}`}
@@ -290,9 +301,16 @@ function StatePanel({ info }: { info: StateInfo }) {
               {race.district && ` – ${race.district}`}
               {race.seatClass && ` (Cl.${race.seatClass})`}
             </span>
-            <span className="text-muted-foreground">→</span>
+            <span className="text-muted-foreground text-right">
+              {race.rCount}R / {race.dCount}D →
+            </span>
           </Link>
         ))}
+        {info.houseCount > 3 && (
+          <p className="text-xs text-muted-foreground">
+            +{info.houseCount - 3} more House races
+          </p>
+        )}
       </div>
     </div>
   )
