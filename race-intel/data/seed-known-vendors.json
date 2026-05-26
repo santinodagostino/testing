@@ -1,0 +1,480 @@
+[
+  {
+    "canonical_name": "Harris Media",
+    "aliases": ["HARRIS MEDIA LLC", "Harris Media Group", "HARRIS MEDIA"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Vincent Harris's firm. Conservative digital ads."
+  },
+  {
+    "canonical_name": "Targeted Victory",
+    "aliases": ["TARGETED VICTORY LLC", "Targeted Victory, LLC", "TV STRATEGIES", "TARGETED VICTORY INC"],
+    "categories": ["digital", "fundraising"],
+    "side": "R",
+    "notes": "Zac Moffatt. Largest R digital + fundraising shop. Often acquires smaller firms; aliases may shift over time."
+  },
+  {
+    "canonical_name": "Push Digital Group",
+    "aliases": ["PUSH DIGITAL GROUP LLC", "Push Digital", "PUSH DIGITAL GRP", "PDG"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Phil Musser-founded. Charleston, SC. Multi-channel digital + creative."
+  },
+  {
+    "canonical_name": "Majority Strategies",
+    "aliases": ["MAJORITY STRATEGIES LLC", "Majority Strategies, LLC"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Jacksonville, FL-based. Digital + mail historically."
+  },
+  {
+    "canonical_name": "Content Creative Media",
+    "aliases": ["CONTENT CREATIVE MEDIA", "Content Creative Media LLC"],
+    "categories": ["digital"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Vici Media Group",
+    "aliases": ["VICI MEDIA GROUP", "Vici Media", "VICI MEDIA LLC"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Programmatic display/CTV/video."
+  },
+  {
+    "canonical_name": "ColdSpark",
+    "aliases": ["COLDSPARK", "ColdSpark LLC", "Cold Spark"],
+    "categories": ["digital", "general_consulting"],
+    "side": "R",
+    "notes": "Pittsburgh-based digital + GC."
+  },
+  {
+    "canonical_name": "Orion Digital Media",
+    "aliases": ["ORION DIGITAL MEDIA", "Orion Digital"],
+    "categories": ["digital"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "FP1 Strategies",
+    "aliases": ["FP1 STRATEGIES LLC", "FP1", "FP1 STRATEGIES"],
+    "categories": ["tv_production", "general_consulting", "comms"],
+    "side": "R",
+    "notes": "Founded by Terry Nelson and Tony Feather. Full-service shop."
+  },
+  {
+    "canonical_name": "Jamestown Associates",
+    "aliases": ["JAMESTOWN ASSOCIATES", "Jamestown"],
+    "categories": ["tv_production", "comms"],
+    "side": "R",
+    "notes": "Larry Weitzner. Closely tied to Trump campaign creative."
+  },
+  {
+    "canonical_name": "BrabenderCox",
+    "aliases": ["BRABENDERCOX LLC", "Brabender Cox", "BRABENDER COX"],
+    "categories": ["tv_production"],
+    "side": "R",
+    "notes": "John Brabender. Pittsburgh-based."
+  },
+  {
+    "canonical_name": "OnMessage Inc.",
+    "aliases": ["ONMESSAGE INC", "OnMessage", "OMI", "ON MESSAGE INC", "ONMESSAGE"],
+    "categories": ["tv_production", "general_consulting", "comms"],
+    "side": "R",
+    "notes": "Curt Anderson, Wes Anderson, Brad Todd."
+  },
+  {
+    "canonical_name": "Strategic Partners & Media",
+    "aliases": ["STRATEGIC PARTNERS MEDIA", "Strategic Partners and Media", "STRATEGIC PARTNERS AND MEDIA LLC"],
+    "categories": ["tv_production"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "National Media Research, Planning & Placement",
+    "aliases": ["NATIONAL MEDIA INC", "National Media", "NATIONAL MEDIA RESEARCH PLANNING PLACEMENT", "NMRPP", "National Media, Inc."],
+    "categories": ["media_buying"],
+    "side": "R",
+    "notes": "Major R-side broadcast/cable buyer. Will Feltus."
+  },
+  {
+    "canonical_name": "Smart Media Group",
+    "aliases": ["SMART MEDIA GROUP", "SMG", "Smart Media"],
+    "categories": ["media_buying"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Strategic Media Services",
+    "aliases": ["STRATEGIC MEDIA SERVICES", "SMS", "Strategic Media Services LLC"],
+    "categories": ["media_buying"],
+    "side": "R",
+    "notes": "Beware: 'SMS' acronym also matches text-message vendors in FEC data. Match on full string only."
+  },
+  {
+    "canonical_name": "Mentzer Media Services",
+    "aliases": ["MENTZER MEDIA", "Mentzer Media Services", "MENTZER MEDIA SERVICES INC"],
+    "categories": ["media_buying"],
+    "side": "R",
+    "notes": "Bruce Mentzer. Maryland."
+  },
+  {
+    "canonical_name": "Crossroads Media",
+    "aliases": ["CROSSROADS MEDIA LLC", "Crossroads Media"],
+    "categories": ["media_buying"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Public Opinion Strategies",
+    "aliases": ["PUBLIC OPINION STRATEGIES", "POS", "Public Opinion Strategies LLC"],
+    "categories": ["polling"],
+    "side": "R",
+    "notes": "Largest R pollster. Glen Bolger, Bill McInturff."
+  },
+  {
+    "canonical_name": "Fabrizio, Lee & Associates",
+    "aliases": ["FABRIZIO LEE & ASSOCIATES", "Fabrizio Lee", "FLA", "FABRIZIO LEE AND ASSOCIATES", "Fabrizio, Lee & Associates Inc"],
+    "categories": ["polling"],
+    "side": "R",
+    "notes": "Tony Fabrizio — Trump's pollster."
+  },
+  {
+    "canonical_name": "McLaughlin & Associates",
+    "aliases": ["MCLAUGHLIN & ASSOCIATES", "McLaughlin and Associates", "MCLAUGHLIN ASSOCIATES"],
+    "categories": ["polling"],
+    "side": "R",
+    "notes": "John McLaughlin."
+  },
+  {
+    "canonical_name": "Cygnal",
+    "aliases": ["CYGNAL", "Cygnal Political", "CYGNAL POLITICAL"],
+    "categories": ["polling"],
+    "side": "R",
+    "notes": "Brent Buchanan. Alabama-based, fast-growing."
+  },
+  {
+    "canonical_name": "National Research, Inc.",
+    "aliases": ["NATIONAL RESEARCH INC", "National Research Inc", "NATIONAL RESEARCH"],
+    "categories": ["polling", "research"],
+    "side": "R",
+    "notes": "Adam Geller. Polling + opposition research."
+  },
+  {
+    "canonical_name": "TargetPoint Consulting",
+    "aliases": ["TARGETPOINT CONSULTING", "TargetPoint", "TARGET POINT CONSULTING"],
+    "categories": ["polling", "data"],
+    "side": "R",
+    "notes": "Microtargeting and survey research."
+  },
+  {
+    "canonical_name": "Data Trust",
+    "aliases": ["DATA TRUST", "The Data Trust", "DATA TRUST LLC"],
+    "categories": ["data"],
+    "side": "R",
+    "notes": "RNC-aligned voter file."
+  },
+  {
+    "canonical_name": "Deep Root Analytics",
+    "aliases": ["DEEP ROOT ANALYTICS", "Deep Root", "DEEP ROOT ANALYTICS LLC"],
+    "categories": ["data"],
+    "side": "R",
+    "notes": "TV viewership analytics for political targeting."
+  },
+  {
+    "canonical_name": "Axiom Strategies",
+    "aliases": ["AXIOM STRATEGIES", "Axiom", "AXIOM STRATEGIES LLC"],
+    "categories": ["general_consulting", "data", "mail"],
+    "side": "R",
+    "notes": "Jeff Roe's firm. Kansas City-based. Multi-service: GC, mail, data."
+  },
+  {
+    "canonical_name": "National Media Insights",
+    "aliases": ["NATIONAL MEDIA INSIGHTS", "NMI"],
+    "categories": ["data"],
+    "side": "R",
+    "notes": "Affiliated with National Media (broadcast buying)."
+  },
+  {
+    "canonical_name": "Pulse Decision Science",
+    "aliases": ["PULSE DECISION SCIENCE", "Pulse"],
+    "categories": ["data"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Right Insight",
+    "aliases": ["RIGHT INSIGHT", "Right Insight LLC"],
+    "categories": ["data"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Arena Communications",
+    "aliases": ["ARENA COMMUNICATIONS", "Arena Wins", "ARENA", "Arena Communications LLC"],
+    "categories": ["mail"],
+    "side": "R",
+    "notes": "Utah-based direct mail."
+  },
+  {
+    "canonical_name": "Eberle Associates",
+    "aliases": ["EBERLE ASSOCIATES", "Eberle", "EBERLE ASSOCIATES INC"],
+    "categories": ["mail", "fundraising"],
+    "side": "R",
+    "notes": "Direct mail + direct response fundraising."
+  },
+  {
+    "canonical_name": "HSP Direct",
+    "aliases": ["HSP DIRECT", "HSP", "HSP DIRECT LLC"],
+    "categories": ["mail", "fundraising"],
+    "side": "R",
+    "notes": "Direct response fundraising specialist."
+  },
+  {
+    "canonical_name": "Checkmate Strategies",
+    "aliases": ["CHECKMATE STRATEGIES", "Checkmate"],
+    "categories": ["mail", "general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Echo Canyon Consulting",
+    "aliases": ["ECHO CANYON CONSULTING", "Echo Canyon"],
+    "categories": ["mail"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Caliber Contact",
+    "aliases": ["CALIBER CONTACT", "Caliber", "CALIBER CONTACT LLC"],
+    "categories": ["mail"],
+    "side": "R",
+    "notes": "PDF categorizes as mail; verify if they also do voter contact/calls."
+  },
+  {
+    "canonical_name": "Napolitano Consulting",
+    "aliases": ["NAPOLITANO CONSULTING"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Ascent Strategic",
+    "aliases": ["ASCENT STRATEGIC", "Ascent Strategic LLC"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "The Strategy Group Co.",
+    "aliases": ["THE STRATEGY GROUP COMPANY", "Strategy Group Co", "TSGco", "TSG", "STRATEGY GROUP CO"],
+    "categories": ["general_consulting"],
+    "side": "R",
+    "notes": "Rex Elsass-founded. Ohio-based."
+  },
+  {
+    "canonical_name": "PLUS Communications",
+    "aliases": ["PLUS COMMUNICATIONS", "PLUS Comms", "PLUS COMMUNICATIONS LLC"],
+    "categories": ["general_consulting", "comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "TAG Strategies",
+    "aliases": ["TAG STRATEGIES", "TAG"],
+    "categories": ["general_consulting"],
+    "side": "R",
+    "notes": "Watch 'TAG' as an alias — short acronyms cause false matches. Prefer full name only."
+  },
+  {
+    "canonical_name": "Intellz",
+    "aliases": ["INTELLZ", "Intellz LLC"],
+    "categories": ["general_consulting", "research"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Firehouse Strategies",
+    "aliases": ["FIREHOUSE STRATEGIES"],
+    "categories": ["general_consulting", "comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Politics Counsel",
+    "aliases": ["POLITICS COUNSEL"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Capitol Communications",
+    "aliases": ["CAPITOL COMMUNICATIONS"],
+    "categories": ["general_consulting", "comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Kelly Strategy",
+    "aliases": ["KELLY STRATEGY", "Kelly Strategy Group"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Tuesday Associates",
+    "aliases": ["TUESDAY ASSOCIATES"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Valkyrie Strategies",
+    "aliases": ["VALKYRIE STRATEGIES", "Valkyrie"],
+    "categories": ["general_consulting"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Capitol City Research",
+    "aliases": ["CAPITOL CITY RESEARCH", "CCR", "Capitol City Research LLC"],
+    "categories": ["research"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "RunSwitch PR",
+    "aliases": ["RUNSWITCH PR", "RunSwitch", "Run Switch", "RUNSWITCH"],
+    "categories": ["comms"],
+    "side": "R",
+    "notes": "Kentucky-based PR firm."
+  },
+  {
+    "canonical_name": "Comella & Co.",
+    "aliases": ["COMELLA & CO", "Comella and Co", "COMELLA"],
+    "categories": ["comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "The November Team",
+    "aliases": ["THE NOVEMBER TEAM", "November Team"],
+    "categories": ["comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Eagle Consult",
+    "aliases": ["EAGLE CONSULT", "Eagle Consulting"],
+    "categories": ["comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Praetorian Public Relations",
+    "aliases": ["PRAETORIAN PUBLIC RELATIONS", "Praetorian PR", "PRAETORIAN"],
+    "categories": ["comms"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "In Field Strategies",
+    "aliases": ["IN FIELD STRATEGIES", "InField Strategies", "IN-FIELD STRATEGIES"],
+    "categories": ["field"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "C3 Public Strategies",
+    "aliases": ["C3 PUBLIC STRATEGIES", "C3", "C3 STRATEGIES"],
+    "categories": ["field"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "WinRed",
+    "aliases": ["WINRED", "WINRED TECHNICAL SERVICES", "WinRed Technical Services LLC"],
+    "categories": ["fundraising"],
+    "side": "R",
+    "notes": "IMPORTANT: This is a payment processor, NOT a consulting vendor. Will appear as the single largest payee on most R campaigns. Either filter out from vendor team analysis or label as platform_processor so it never shows as 'the candidate's fundraising firm.'"
+  },
+  {
+    "canonical_name": "Capitol Strategy Group",
+    "aliases": ["CAPITOL STRATEGY GROUP"],
+    "categories": ["fundraising"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Campaign Engine",
+    "aliases": ["CAMPAIGN ENGINE", "Campaign Engine LLC"],
+    "categories": ["fundraising"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "IMGE",
+    "aliases": ["IMGE", "IMGE LLC"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Phil Musser / Ethan Eilon. Digital + creative."
+  },
+  {
+    "canonical_name": "Stoneridge Group",
+    "aliases": ["STONERIDGE GROUP", "Stoneridge", "STONERIDGE"],
+    "categories": ["digital"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Convergence Media",
+    "aliases": ["CONVERGENCE MEDIA", "Convergence Media LLC", "CONVERGENCE TARGETED MEDIA"],
+    "categories": ["digital"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Engage",
+    "aliases": ["ENGAGE", "Engage DC", "ENGAGE LLC"],
+    "categories": ["digital"],
+    "side": "R",
+    "notes": "Watch 'Engage' alias — common word in FEC purpose strings. Prefer full company-name match only."
+  },
+  {
+    "canonical_name": "The Tarrance Group",
+    "aliases": ["TARRANCE GROUP", "The Tarrance Group", "TARRANCE GROUP LIMITED", "TARRANCE"],
+    "categories": ["polling"],
+    "side": "R",
+    "notes": "Longstanding R polling firm."
+  },
+  {
+    "canonical_name": "WPA Intelligence",
+    "aliases": ["WPA INTELLIGENCE", "WPA", "Wilson Perkins Allen", "WILSON PERKINS ALLEN"],
+    "categories": ["polling", "data"],
+    "side": "R",
+    "notes": "Chris Wilson. Polling + analytics."
+  },
+  {
+    "canonical_name": "Causeway Solutions",
+    "aliases": ["CAUSEWAY SOLUTIONS", "Causeway"],
+    "categories": ["data"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Optimus Consulting",
+    "aliases": ["OPTIMUS CONSULTING", "Optimus", "OPTIMUS"],
+    "categories": ["data"],
+    "side": "R",
+    "notes": "Watch 'Optimus' alias for false matches against unrelated vendors."
+  },
+  {
+    "canonical_name": "SRCP Media",
+    "aliases": ["SRCP MEDIA", "SRCP"],
+    "categories": ["tv_production"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "Huckaby Davis Lisker",
+    "aliases": ["HUCKABY DAVIS LISKER", "HDL", "Huckaby Davis Lisker Inc"],
+    "categories": ["compliance"],
+    "side": "R",
+    "notes": "FEC compliance firm. Common across R federal committees."
+  },
+  {
+    "canonical_name": "Holtzman Vogel",
+    "aliases": ["HOLTZMAN VOGEL", "HOLTZMAN VOGEL BARAN TORCHINSKY JOSEFIAK", "Holtzman Vogel Baran Torchinsky & Josefiak", "HOLTZMAN VOGEL BARAN TORCHINSKY AND JOSEFIAK"],
+    "categories": ["legal"],
+    "side": "R",
+    "notes": "Jason Torchinsky. Campaign finance + election law."
+  },
+  {
+    "canonical_name": "Vanguard Field Strategies",
+    "aliases": ["VANGUARD FIELD STRATEGIES", "Vanguard FS", "VANGUARD FIELD"],
+    "categories": ["field"],
+    "side": "R"
+  },
+  {
+    "canonical_name": "New Frontier Strategy",
+    "aliases": ["NEW FRONTIER STRATEGY", "New Frontier", "NFS"],
+    "categories": ["general_consulting"],
+    "side": "R",
+    "notes": "Mike Reed. Watch 'NFS' alias for false matches."
+  },
+  {
+    "canonical_name": "Anedot",
+    "aliases": ["ANEDOT", "Anedot Inc", "ANEDOT INC"],
+    "categories": ["fundraising"],
+    "side": "R",
+    "notes": "IMPORTANT: Payment processor (like WinRed), NOT a consulting vendor. Flag as platform_processor in the matcher so it never shows as 'the candidate's fundraising firm.' More common on state-level R campaigns."
+  }
+]

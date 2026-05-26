@@ -1,0 +1,272 @@
+[
+  {
+    "name": "Politico Playbook",
+    "type": "rss",
+    "url": "https://rss.politico.com/playbook.xml",
+    "polling_cadence_hours": 6,
+    "category": "national",
+    "state": null,
+    "notes": "AM tipsheet. Highest-signal source for federal considering rumors. Verify exact RSS URL on first poll."
+  },
+  {
+    "name": "Politico Morning Score",
+    "type": "rss",
+    "url": "https://rss.politico.com/morningscore.xml",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Politico's campaigns newsletter. RSS may be discontinued — fall back to scraping politico.com/morningscore if 404."
+  },
+  {
+    "name": "Punchbowl News",
+    "type": "html",
+    "url": "https://punchbowl.news/",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Most content paywalled. Scrape the public homepage + free items. AM newsletter occasionally surfaces considering signals."
+  },
+  {
+    "name": "The Hill - Campaign",
+    "type": "rss",
+    "url": "https://thehill.com/homenews/campaign/feed/",
+    "polling_cadence_hours": 6,
+    "category": "national",
+    "state": null
+  },
+  {
+    "name": "Axios Sneak Peek",
+    "type": "rss",
+    "url": "https://api.axios.com/feed/sneak-peek/",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Sunday newsletter, lower frequency. Often breaks gubernatorial considering signals."
+  },
+  {
+    "name": "Roll Call",
+    "type": "rss",
+    "url": "https://rollcall.com/feed/",
+    "polling_cadence_hours": 8,
+    "category": "national",
+    "state": null,
+    "notes": "Strong federal coverage, especially House races."
+  },
+  {
+    "name": "Cook Political Report",
+    "type": "rss",
+    "url": "https://www.cookpolitical.com/rss.xml",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "Race ratings primarily. Verify RSS exists — most content is paywalled; ratings tables are scrapeable from public pages."
+  },
+  {
+    "name": "Sabato's Crystal Ball",
+    "type": "rss",
+    "url": "https://centerforpolitics.org/crystalball/feed/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null
+  },
+  {
+    "name": "Inside Elections",
+    "type": "html",
+    "url": "https://insideelections.com/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "Mostly paywalled. Public ratings tables and headline summaries are scrapeable."
+  },
+  {
+    "name": "Campaigns & Elections",
+    "type": "rss",
+    "url": "https://campaignsandelections.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "Industry trade — strongest source for staff hires, agency news, and vendor moves rather than considering signals."
+  },
+  {
+    "name": "Daily Kos Elections",
+    "type": "rss",
+    "url": "https://www.dailykos.com/blogs/Daily-Kos-Elections.rss",
+    "polling_cadence_hours": 8,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "D-leaning outlet but tracks races neutrally and aggregates state-level news. Strong for downballot rumors."
+  },
+  {
+    "name": "Bolts Magazine",
+    "type": "rss",
+    "url": "https://boltsmag.org/feed/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "State/local politics focus. Useful for governor + AG/SoS considering signals."
+  },
+  {
+    "name": "Pluribus News",
+    "type": "rss",
+    "url": "https://pluribusnews.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "State policy and politics. Verify RSS URL on first poll."
+  },
+  {
+    "name": "Stateline",
+    "type": "rss",
+    "url": "https://stateline.org/feed/",
+    "polling_cadence_hours": 24,
+    "category": "politics_trade",
+    "state": null,
+    "notes": "Pew-funded, state-focused. Verify RSS URL on first poll."
+  },
+  {
+    "name": "Florida Politics",
+    "type": "rss",
+    "url": "https://floridapolitics.com/feed/",
+    "polling_cadence_hours": 6,
+    "category": "state",
+    "state": "FL",
+    "notes": "Peter Schorsch's outlet. Highest-signal FL source for gubernatorial + statewide chatter."
+  },
+  {
+    "name": "Texas Tribune",
+    "type": "rss",
+    "url": "https://www.texastribune.org/feed/",
+    "polling_cadence_hours": 8,
+    "category": "state",
+    "state": "TX"
+  },
+  {
+    "name": "CalMatters",
+    "type": "rss",
+    "url": "https://calmatters.org/feed/",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "CA"
+  },
+  {
+    "name": "Bangor Daily News",
+    "type": "rss",
+    "url": "https://www.bangordailynews.com/feed/",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "ME",
+    "notes": "Strong ME political coverage; filter by politics tag if possible."
+  },
+  {
+    "name": "Maine Morning Star",
+    "type": "rss",
+    "url": "https://mainemorningstar.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "state",
+    "state": "ME",
+    "notes": "States Newsroom outlet. Reliable RSS pattern."
+  },
+  {
+    "name": "Ohio Capital Journal",
+    "type": "rss",
+    "url": "https://ohiocapitaljournal.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "state",
+    "state": "OH"
+  },
+  {
+    "name": "Bridge Michigan",
+    "type": "rss",
+    "url": "https://www.bridgemi.com/rss.xml",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "MI",
+    "notes": "Verify RSS URL on first poll."
+  },
+  {
+    "name": "Michigan Advance",
+    "type": "rss",
+    "url": "https://michiganadvance.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "state",
+    "state": "MI"
+  },
+  {
+    "name": "Spotlight PA",
+    "type": "rss",
+    "url": "https://www.spotlightpa.org/news/feed/",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "PA",
+    "notes": "Verify RSS URL on first poll."
+  },
+  {
+    "name": "Georgia Recorder",
+    "type": "rss",
+    "url": "https://georgiarecorder.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "state",
+    "state": "GA"
+  },
+  {
+    "name": "Atlanta Journal-Constitution Politics",
+    "type": "html",
+    "url": "https://www.ajc.com/politics/",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "GA",
+    "notes": "Paywall — scrape headlines + dek only. Don't try to fetch full body."
+  },
+  {
+    "name": "Arizona Mirror",
+    "type": "rss",
+    "url": "https://azmirror.com/feed/",
+    "polling_cadence_hours": 24,
+    "category": "state",
+    "state": "AZ"
+  },
+  {
+    "name": "City & State New York",
+    "type": "rss",
+    "url": "https://www.cityandstateny.com/feeds/all/",
+    "polling_cadence_hours": 12,
+    "category": "state",
+    "state": "NY",
+    "notes": "Verify RSS URL on first poll."
+  },
+  {
+    "name": "Google News - Governor Considering",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=%22considering+a+run+for+governor%22&hl=en-US&gl=US&ceid=US:en",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Google News RSS query. Catches state outlets I haven't seeded. Free, reliable, no API key."
+  },
+  {
+    "name": "Google News - Senate Bid",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=%22weighing+a+senate+bid%22+OR+%22exploring+a+senate+bid%22&hl=en-US&gl=US&ceid=US:en",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Catches mid-tier press not in seed list."
+  },
+  {
+    "name": "Google News - Exploring Run",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=%22exploring+a+run+for%22+%28governor+OR+senate+OR+congress%29&hl=en-US&gl=US&ceid=US:en",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null,
+    "notes": "Broadest catchall query."
+  },
+  {
+    "name": "Google News - Considering Bid",
+    "type": "rss",
+    "url": "https://news.google.com/rss/search?q=%22considering+a+bid%22+%28governor+OR+senate%29&hl=en-US&gl=US&ceid=US:en",
+    "polling_cadence_hours": 12,
+    "category": "national",
+    "state": null
+  }
+]
