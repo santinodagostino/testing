@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results | Governor Larry Rhoden</title>
+  <meta name="description" content="Results from Governor Larry Rhoden's first year keeping South Dakota strong, safe, and free." />
+  <meta property="og:title" content="Results – Governor Larry Rhoden" />
+  <meta property="og:description" content="In just over a year, Governor Larry Rhoden delivered significant results for South Dakota." />
+  <meta property="og:type" content="website" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            sdNavy: "#0033A0",
+            sdGold: "#FFD100",
+            sdRed: "#C8102E",
+            sdInk: "#0B1B3B"
+          },
+          boxShadow: {
+            card: "0 10px 35px -18px rgba(0, 29, 93, 0.35)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0b1b3b;
+    }
+    .hero-flag-gradient {
+      background:
+        linear-gradient(160deg, rgba(0, 51, 160, 0.97) 0%, rgba(0, 51, 160, 0.88) 44%, rgba(200, 16, 46, 0.8) 100%),
+        radial-gradient(circle at 84% 12%, rgba(255, 209, 0, 0.28), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01));
+    }
+    .hero-hills {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 170px;
+      background:
+        radial-gradient(140% 120% at 8% 100%, rgba(255,255,255,0.2), transparent 52%),
+        radial-gradient(120% 120% at 42% 100%, rgba(255,255,255,0.16), transparent 52%),
+        radial-gradient(100% 120% at 78% 100%, rgba(255,255,255,0.13), transparent 52%);
+      pointer-events: none;
+    }
+    .stats-grid .stat-card {
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+    .stats-grid .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -20px rgba(0, 31, 95, 0.5);
+    }
+    .pill[aria-pressed="true"] {
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.45);
+      transform: translateY(-1px);
+    }
+    .chip[aria-pressed="true"] {
+      border-color: #0033A0;
+      background: rgba(0, 51, 160, 0.08);
+      color: #0033A0;
+      font-weight: 700;
+    }
+    .results-columns {
+      columns: 1;
+      column-gap: 1.25rem;
+    }
+    @media (min-width: 768px) {
+      .results-columns {
+        columns: 2;
+      }
+    }
+    @media (min-width: 1200px) {
+      .results-columns {
+        columns: 3;
+      }
+    }
+    .result-card {
+      break-inside: avoid;
+      margin-bottom: 1.25rem;
+    }
+    .modal-backdrop {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+    .modal-panel {
+      opacity: 0;
+      transform: translateY(14px) scale(0.97);
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .modal-open .modal-backdrop {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-open .modal-panel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .map-pin[aria-pressed="true"] {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 0 0 3px rgba(255, 209, 0, 0.45);
+    }
+    .focus-ring:focus-visible {
+      outline: 3px solid #ffd100;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-sdGold text-sdInk px-4 py-2 rounded-md font-semibold z-50">Skip to content</a>
+
+  <header class="hero-flag-gradient text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-24 md:pt-20 md:pb-28 relative z-10">
+      <p class="inline-flex items-center gap-2 text-xs sm:text-sm uppercase tracking-[0.18em] bg-white/15 border border-white/25 rounded-full px-4 py-2">
+        <span class="w-2 h-2 rounded-full bg-sdGold"></span>
+        Official Accomplishments
+      </p>
+      <h1 class="mt-6 text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight max-w-5xl">
+        In just over a year, Governor Larry Rhoden accomplished significant results to keep South Dakota strong, safe, and free.
+      </h1>
+      <p class="mt-5 text-lg sm:text-xl text-blue-100 max-w-3xl font-medium">
+        Governor Rhoden doesn’t just make plans – he gets it done.
+      </p>
+    </div>
+    <div class="hero-hills" aria-hidden="true"></div>
+  </header>
+
+  <main id="main-content">
+    <section aria-labelledby="numbers-title" class="bg-white border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div class="flex items-end justify-between gap-4 flex-wrap">
+          <div>
+            <h2 id="numbers-title" class="text-2xl md:text-3xl font-extrabold text-sdInk">By the Numbers</h2>
+            <p class="mt-2 text-slate-700">Measured progress for South Dakota families, workers, and communities.</p>
+          </div>
+        </div>
+        <div id="stats-grid" class="stats-grid mt-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5" aria-live="polite">
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Property Tax Relief</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="25" data-end="45" data-format="rangePercent">25-45%</span>
+            </p>
+            <p class="mt-2 text-slate-700">Property tax cut range delivered for South Dakotans.</p>
+          </article>
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Economic Growth</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="0" data-end="1" data-format="billions">$1 Billion+</span>
+            </p>
+            <p class="mt-2 text-slate-700">Major projects driving over one billion in statewide impact.</p>
+          </article>
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Jobs</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="0" data-end="1" data-format="rank">#1</span>
+            </p>
+            <p class="mt-2 text-slate-700">Lowest unemployment rate in America.</p>
+          </article>
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Crime Reduction</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="0" data-end="10" data-format="plusPercent">10%+</span>
+            </p>
+            <p class="mt-2 text-slate-700">Double-digit drops in murder, meth, and robbery rates.</p>
+          </article>
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Prison Plan Savings</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="0" data-end="175" data-format="millions">$175M</span>
+            </p>
+            <p class="mt-2 text-slate-700">Taxpayer savings on the new prison project.</p>
+          </article>
+          <article class="stat-card rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-card">
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500 font-semibold">Rural Health</p>
+            <p class="mt-3 text-4xl font-extrabold text-sdNavy">
+              <span class="stat-value" data-start="0" data-end="189" data-format="millions">$189M</span>
+            </p>
+            <p class="mt-2 text-slate-700">Federal funds secured to protect rural healthcare access.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="filter-title" class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-card p-5 md:p-7">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 id="filter-title" class="text-2xl font-extrabold text-sdInk">Explore the Results</h2>
+              <p class="text-slate-700 mt-1">Search and filter accomplishments by pillar and issue area.</p>
+            </div>
+            <button id="toggle-map" type="button" class="focus-ring inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 px-4 py-2.5 text-sm font-semibold text-sdInk hover:bg-slate-50 transition min-h-[44px]" aria-pressed="false" aria-controls="map-panel">
+              <span aria-hidden="true">🗺️</span>
+              <span>Map View</span>
+            </button>
+          </div>
+
+          <div class="mt-6">
+            <label for="search-input" class="sr-only">Search accomplishments</label>
+            <input id="search-input" type="search" placeholder="Search accomplishments..." class="focus-ring w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-sdInk placeholder:text-slate-500 shadow-sm focus:border-sdNavy" />
+          </div>
+
+          <div id="pillar-buttons" class="mt-5 grid grid-cols-2 lg:grid-cols-4 gap-3" role="group" aria-label="Filter by pillar">
+            <button type="button" data-pillar="all" class="pill focus-ring min-h-[50px] rounded-full border-2 border-sdGold text-sdInk bg-white font-extrabold text-sm sm:text-base px-4 py-3 transition hover:bg-yellow-50" aria-pressed="true">All</button>
+            <button type="button" data-pillar="strong" class="pill focus-ring min-h-[50px] rounded-full border-2 border-transparent bg-sdGold text-sdInk font-extrabold text-sm sm:text-base px-4 py-3 transition hover:brightness-95" aria-pressed="false">Keeping South Dakota Strong</button>
+            <button type="button" data-pillar="safe" class="pill focus-ring min-h-[50px] rounded-full border-2 border-transparent bg-sdNavy text-white font-extrabold text-sm sm:text-base px-4 py-3 transition hover:bg-blue-900" aria-pressed="false">Keeping South Dakota Safe</button>
+            <button type="button" data-pillar="free" class="pill focus-ring min-h-[50px] rounded-full border-2 border-transparent bg-sdRed text-white font-extrabold text-sm sm:text-base px-4 py-3 transition hover:bg-red-700" aria-pressed="false">Keeping South Dakota Free</button>
+          </div>
+
+          <div id="secondary-chips-wrap" class="mt-5 hidden">
+            <p class="text-sm font-semibold text-slate-600 mb-2">Filter by topic</p>
+            <div id="secondary-chips" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div id="map-panel" class="mt-6 hidden border border-slate-200 rounded-xl p-4 sm:p-6 bg-slate-50">
+            <div class="flex flex-col md:flex-row gap-6">
+              <div class="md:w-2/3">
+                <h3 class="text-lg font-bold text-sdInk">South Dakota Map View</h3>
+                <p class="text-sm text-slate-700 mt-1">Select a region to filter accomplishments tied to that area.</p>
+                <div class="mt-4 relative max-w-xl">
+                  <svg viewBox="0 0 600 300" class="w-full h-auto" role="img" aria-label="Stylized map of South Dakota">
+                    <path d="M45 63 L560 63 L548 232 L42 232 Z" fill="#E9EFFB" stroke="#0033A0" stroke-width="3" />
+                    <path d="M300 63 L300 232" stroke="#AFC4ED" stroke-width="2" stroke-dasharray="6 6" />
+                    <path d="M45 150 L560 150" stroke="#AFC4ED" stroke-width="2" stroke-dasharray="6 6" />
+                  </svg>
+                  <button type="button" class="map-pin focus-ring absolute top-[69%] left-[62%] -translate-x-1/2 -translate-y-1/2 bg-sdNavy text-white text-xs font-bold px-3 py-2 rounded-full min-h-[36px]" data-region="sioux falls" aria-pressed="false">Sioux Falls</button>
+                  <button type="button" class="map-pin focus-ring absolute top-[57%] left-[23%] -translate-x-1/2 -translate-y-1/2 bg-sdNavy text-white text-xs font-bold px-3 py-2 rounded-full min-h-[36px]" data-region="rapid city" aria-pressed="false">Rapid City</button>
+                  <button type="button" class="map-pin focus-ring absolute top-[35%] left-[57%] -translate-x-1/2 -translate-y-1/2 bg-sdNavy text-white text-xs font-bold px-3 py-2 rounded-full min-h-[36px]" data-region="aberdeen" aria-pressed="false">Aberdeen</button>
+                  <button type="button" class="map-pin focus-ring absolute top-[52%] left-[42%] -translate-x-1/2 -translate-y-1/2 bg-sdGold text-sdInk text-xs font-bold px-3 py-2 rounded-full min-h-[36px]" data-region="rural" aria-pressed="false">Rural</button>
+                </div>
+              </div>
+              <div class="md:w-1/3">
+                <h4 class="text-sm uppercase tracking-[0.14em] font-bold text-slate-600">Map Filter</h4>
+                <div id="active-region-label" class="mt-2 text-lg font-extrabold text-sdNavy">All Regions</div>
+                <button id="clear-region" type="button" class="focus-ring mt-4 rounded-full border border-slate-300 text-sdInk px-4 py-2 font-semibold text-sm hover:bg-white transition min-h-[44px]">Clear Region Filter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cards-title" class="pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-6">
+          <h2 id="cards-title" class="text-2xl md:text-3xl font-extrabold text-sdInk">Accomplishment Highlights</h2>
+          <p id="result-count" class="text-sm sm:text-base font-semibold text-slate-700" aria-live="polite"></p>
+        </div>
+        <div id="card-grid" class="results-columns" aria-live="polite"></div>
+        <div id="no-results" class="hidden rounded-xl border border-dashed border-slate-300 bg-white p-8 text-center text-slate-700">
+          No accomplishments match your current filters. Try clearing a topic, region, or search term.
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-sdNavy text-white py-16">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight">These are results. Help keep South Dakota strong, safe, and free.</h2>
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+          <a href="https://secure.winred.com/larry-rhoden-for-governor/donate-today" class="focus-ring min-h-[48px] inline-flex items-center justify-center rounded-full bg-sdGold text-sdInk font-extrabold px-8 py-3 hover:brightness-95 transition shadow-md">Donate</a>
+          <a href="https://governorlarryrhoden.com/contact/" class="focus-ring min-h-[48px] inline-flex items-center justify-center rounded-full border-2 border-white/80 text-white font-extrabold px-8 py-3 hover:bg-white hover:text-sdNavy transition">Volunteer</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-root" class="fixed inset-0 z-50 pointer-events-none" aria-hidden="true">
+    <div id="modal-backdrop" class="modal-backdrop absolute inset-0 bg-slate-950/70"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-6">
+      <article id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title" class="modal-panel pointer-events-auto w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl border border-slate-200">
+        <div id="modal-header" class="px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-4">
+          <div>
+            <p id="modal-pillar" class="text-xs uppercase tracking-[0.16em] font-bold text-slate-600"></p>
+            <h3 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-sdInk"></h3>
+          </div>
+          <button id="modal-close" type="button" class="focus-ring rounded-full border border-slate-300 px-3 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 min-h-[44px]" aria-label="Close details dialog">
+            Close
+          </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[65vh]">
+          <p id="modal-stat" class="text-2xl font-extrabold text-sdNavy"></p>
+          <div id="modal-content" class="mt-4 text-slate-800 leading-7 whitespace-pre-line"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <script>
+    const accomplishments = [
+      {
+        id: "strong-property-tax-relief",
+        pillar: "strong",
+        title: "Largest Property Tax Relief Push",
+        keyStat: "25-45%",
+        teaser: "Advanced a plan delivering a 25% to 45% property tax cut, giving families and seniors meaningful relief.",
+        fullText: "Governor Rhoden advanced and signed a property tax relief package designed to deliver a 25% to 45% property tax cut for South Dakota homeowners. The plan was built to provide immediate relief and long-term stability for families, retirees, and working South Dakotans facing higher local costs.",
+        tags: ["taxes", "economy", "seniors"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "strong-economic-impact",
+        pillar: "strong",
+        title: "Statewide Growth Momentum",
+        keyStat: "$1 Billion+",
+        teaser: "Secured and supported projects with more than $1 billion in economic impact across South Dakota.",
+        fullText: "Under Governor Rhoden's leadership, South Dakota secured and supported projects generating more than $1 billion in economic impact. These investments are creating jobs, strengthening local tax bases, and expanding opportunity in communities across the state.",
+        tags: ["economy", "workforce", "infrastructure"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "strong-unemployment",
+        pillar: "strong",
+        title: "Lowest Unemployment in America",
+        keyStat: "#1",
+        teaser: "South Dakota led the nation with the lowest unemployment rate, reflecting durable pro-growth policy.",
+        fullText: "South Dakota ranked #1 for the lowest unemployment in America. Governor Rhoden's focus on private-sector growth, workforce participation, and rural opportunity helped keep South Dakotans working and businesses hiring.",
+        tags: ["jobs", "workforce", "economy"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "strong-rural-health-funding",
+        pillar: "strong",
+        title: "Rural Healthcare Funding Secured",
+        keyStat: "$189 Million",
+        teaser: "Brought in $189 million in federal funds to protect and modernize rural healthcare access.",
+        fullText: "Governor Rhoden secured $189 million in federal funds for rural health priorities. These resources are supporting long-term access to care, modernization needs, and stronger healthcare delivery for rural South Dakota communities.",
+        tags: ["healthcare", "rural", "federal funds"],
+        regions: ["rural", "aberdeen", "rapid city"]
+      },
+      {
+        id: "strong-agriculture-backbone",
+        pillar: "strong",
+        title: "Backed Agriculture & Ranching",
+        keyStat: "Statewide",
+        teaser: "Defended agriculture policy priorities and protected producers from costly overreach.",
+        fullText: "Governor Rhoden prioritized South Dakota's agricultural backbone by supporting producers, defending ranching interests, and pushing back on policy overreach that raises costs. His administration kept agriculture central to economic strategy and rural strength.",
+        tags: ["agriculture", "rural", "regulation"],
+        regions: ["rural", "rapid city", "aberdeen"]
+      },
+      {
+        id: "strong-workforce-pathways",
+        pillar: "strong",
+        title: "Expanded Workforce Pathways",
+        keyStat: "Skilled Jobs",
+        teaser: "Strengthened workforce pipelines to connect South Dakotans to high-demand careers.",
+        fullText: "Governor Rhoden supported workforce development pathways that connect South Dakotans with high-demand careers through training, credentialing, and employer partnerships. The focus was clear: prepare workers, fill jobs, and keep growth moving.",
+        tags: ["workforce", "education", "jobs"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "strong-education-support",
+        pillar: "strong",
+        title: "Strengthened Education Outcomes",
+        keyStat: "Future Ready",
+        teaser: "Advanced education priorities that support students, teachers, and local communities.",
+        fullText: "Governor Rhoden backed education priorities aimed at student achievement, teacher support, and practical pathways to post-secondary success. His approach emphasized local control and measurable outcomes that prepare the next generation.",
+        tags: ["education", "workforce", "families"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "safe-crime-drops",
+        pillar: "safe",
+        title: "Crime Trends Moved Down",
+        keyStat: "Double Digits",
+        teaser: "South Dakota saw double-digit drops in murder, meth, and robbery rates.",
+        fullText: "South Dakota posted double-digit declines in murder, meth, and robbery rates. Governor Rhoden's support for law enforcement coordination and targeted public safety efforts helped drive these outcomes.",
+        tags: ["crime", "law enforcement", "public safety"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "safe-prison-savings",
+        pillar: "safe",
+        title: "Smarter Prison Plan",
+        keyStat: "$175 Million",
+        teaser: "Delivered a revised prison plan that saved taxpayers $175 million while maintaining safety goals.",
+        fullText: "Governor Rhoden released and advanced a revised prison plan that saved taxpayers $175 million. The plan maintained core public safety objectives while improving fiscal discipline and long-term value for South Dakota taxpayers.",
+        tags: ["crime", "fiscal responsibility", "infrastructure"],
+        regions: ["sioux falls", "rural"]
+      },
+      {
+        id: "safe-law-enforcement-support",
+        pillar: "safe",
+        title: "Support for Law Enforcement",
+        keyStat: "Backed",
+        teaser: "Prioritized recruitment, retention, and resources for local and state law enforcement partners.",
+        fullText: "Governor Rhoden prioritized law enforcement support by backing recruitment and retention efforts and ensuring officers had the resources needed to keep communities safe. His administration emphasized partnership with local agencies across South Dakota.",
+        tags: ["law enforcement", "crime", "public safety"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "safe-meth-response",
+        pillar: "safe",
+        title: "Aggressive Meth Response",
+        keyStat: "Statewide",
+        teaser: "Expanded coordinated action against meth trafficking and meth-related community harm.",
+        fullText: "Governor Rhoden supported coordinated statewide action to combat meth trafficking and meth-related harm. The strategy brought together enforcement, prevention, and community response to protect South Dakota families.",
+        tags: ["meth", "crime", "families"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "safe-border-security",
+        pillar: "safe",
+        title: "Border Security Partnership",
+        keyStat: "Enforced",
+        teaser: "Backed border security cooperation and policies that keep dangerous criminals out.",
+        fullText: "Governor Rhoden supported border security cooperation and enforcement-focused policies to keep dangerous criminals, fentanyl, and trafficking activity from harming South Dakota communities.",
+        tags: ["immigration", "crime", "fentanyl"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "safe-emergency-readiness",
+        pillar: "safe",
+        title: "Emergency Readiness",
+        keyStat: "Prepared",
+        teaser: "Strengthened readiness and response coordination for severe weather and emergencies.",
+        fullText: "Governor Rhoden strengthened statewide emergency readiness by supporting planning, communications, and interagency response systems so South Dakota can respond quickly during severe weather and other emergencies.",
+        tags: ["public safety", "infrastructure", "preparedness"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-second-amendment",
+        pillar: "free",
+        title: "Defended 2A Rights",
+        keyStat: "Protected",
+        teaser: "Upheld and protected Second Amendment rights for law-abiding South Dakotans.",
+        fullText: "Governor Rhoden defended the constitutional rights of law-abiding South Dakotans by supporting policies that protect the Second Amendment and preserve South Dakota's long tradition of responsible firearm ownership.",
+        tags: ["2a", "constitution", "freedom"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-free-speech",
+        pillar: "free",
+        title: "Protected Free Speech",
+        keyStat: "Anti-SLAPP",
+        teaser: "Signed protections to stop abusive lawsuits designed to silence public participation.",
+        fullText: "Governor Rhoden signed anti-SLAPP protections to defend free speech rights and prevent frivolous lawsuits intended to silence citizens for exercising their voices on public issues.",
+        tags: ["free speech", "constitution", "good government"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-cut-red-tape",
+        pillar: "free",
+        title: "Cut Red Tape",
+        keyStat: "Reduced",
+        teaser: "Advanced good-government reforms to shrink bureaucracy and remove unnecessary regulation.",
+        fullText: "Governor Rhoden signed and advanced good-government reforms that reduced bureaucracy, removed outdated regulations, and made state government more efficient and accountable to taxpayers.",
+        tags: ["regulation", "good government", "economy"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-parents-rights",
+        pillar: "free",
+        title: "Upheld Parents' Rights",
+        keyStat: "Family First",
+        teaser: "Backed policies that keep parents in charge of their children's education and values.",
+        fullText: "Governor Rhoden supported policies that affirm parents' rights in education and ensure families remain primary decision-makers in their children's upbringing and learning.",
+        tags: ["education", "families", "freedom"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-election-integrity",
+        pillar: "free",
+        title: "Election Integrity Measures",
+        keyStat: "Safeguarded",
+        teaser: "Strengthened election safeguards and accountability to protect voter confidence.",
+        fullText: "Governor Rhoden backed election integrity measures that strengthen safeguards, improve accountability, and protect voter confidence in South Dakota's elections.",
+        tags: ["elections", "good government", "freedom"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      },
+      {
+        id: "free-energy-independence",
+        pillar: "free",
+        title: "Defended Energy Freedom",
+        keyStat: "Reliable",
+        teaser: "Supported practical energy policy to keep power reliable and affordable for families and employers.",
+        fullText: "Governor Rhoden defended practical energy policy focused on reliability, affordability, and independence. His administration pushed back against one-size-fits-all mandates that threaten South Dakota jobs and household budgets.",
+        tags: ["energy", "economy", "regulation"],
+        regions: ["sioux falls", "rapid city", "aberdeen", "rural"]
+      }
+    ];
+
+    const pillarMeta = {
+      strong: { label: "Keeping South Dakota Strong", colorClass: "bg-sdGold text-sdInk", accent: "bg-sdGold", accentHex: "#FFD100" },
+      safe: { label: "Keeping South Dakota Safe", colorClass: "bg-sdNavy text-white", accent: "bg-sdNavy", accentHex: "#0033A0" },
+      free: { label: "Keeping South Dakota Free", colorClass: "bg-sdRed text-white", accent: "bg-sdRed", accentHex: "#C8102E" }
+    };
+
+    const state = {
+      pillar: "all",
+      search: "",
+      tag: "",
+      region: "",
+      mapView: false
+    };
+
+    const searchInput = document.getElementById("search-input");
+    const pillarButtons = Array.from(document.querySelectorAll("#pillar-buttons .pill"));
+    const chipsWrap = document.getElementById("secondary-chips-wrap");
+    const chipsContainer = document.getElementById("secondary-chips");
+    const grid = document.getElementById("card-grid");
+    const noResults = document.getElementById("no-results");
+    const resultCount = document.getElementById("result-count");
+    const mapPanel = document.getElementById("map-panel");
+    const mapToggle = document.getElementById("toggle-map");
+    const mapPins = Array.from(document.querySelectorAll(".map-pin"));
+    const clearRegionBtn = document.getElementById("clear-region");
+    const activeRegionLabel = document.getElementById("active-region-label");
+
+    const modalRoot = document.getElementById("modal-root");
+    const modalBackdrop = document.getElementById("modal-backdrop");
+    const modalPanel = document.getElementById("modal-panel");
+    const modalClose = document.getElementById("modal-close");
+    const modalTitle = document.getElementById("modal-title");
+    const modalPillar = document.getElementById("modal-pillar");
+    const modalStat = document.getElementById("modal-stat");
+    const modalContent = document.getElementById("modal-content");
+    const modalHeader = document.getElementById("modal-header");
+
+    let lastFocusedEl = null;
+
+    function normalize(str) {
+      return (str || "").toLowerCase().trim();
+    }
+
+    function filterCards() {
+      const q = normalize(state.search);
+      return accomplishments.filter((item) => {
+        const matchesPillar = state.pillar === "all" || item.pillar === state.pillar;
+        const matchesTag = !state.tag || item.tags.includes(state.tag);
+        const matchesRegion = !state.region || item.regions.includes(state.region);
+        const haystack = [
+          item.title,
+          item.keyStat,
+          item.teaser,
+          item.fullText,
+          item.tags.join(" ")
+        ].join(" ").toLowerCase();
+        const matchesSearch = !q || haystack.includes(q);
+        return matchesPillar && matchesTag && matchesRegion && matchesSearch;
+      });
+    }
+
+    function getVisibleTags() {
+      if (state.pillar === "all") return [];
+      const tags = new Set();
+      accomplishments
+        .filter((item) => item.pillar === state.pillar)
+        .forEach((item) => item.tags.forEach((tag) => tags.add(tag)));
+      return Array.from(tags).sort((a, b) => a.localeCompare(b));
+    }
+
+    function prettyTag(tag) {
+      const mapping = {
+        "2a": "2A",
+        "good government": "Good Government",
+        "free speech": "Free Speech",
+        "federal funds": "Federal Funds"
+      };
+      if (mapping[tag]) return mapping[tag];
+      return tag
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    }
+
+    function renderSecondaryChips() {
+      const tags = getVisibleTags();
+      if (!tags.length) {
+        chipsWrap.classList.add("hidden");
+        chipsContainer.innerHTML = "";
+        state.tag = "";
+        return;
+      }
+      chipsWrap.classList.remove("hidden");
+      chipsContainer.innerHTML = tags.map((tag) => {
+        const active = tag === state.tag;
+        return `
+          <button
+            type="button"
+            class="chip focus-ring rounded-full border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 transition hover:bg-slate-50 min-h-[40px]"
+            data-tag="${tag}"
+            aria-pressed="${active ? "true" : "false"}"
+          >${prettyTag(tag)}</button>
+        `;
+      }).join("");
+
+      chipsContainer.querySelectorAll(".chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tag = btn.dataset.tag;
+          state.tag = state.tag === tag ? "" : tag;
+          renderAll();
+        });
+      });
+    }
+
+    function renderCards() {
+      const items = filterCards();
+      resultCount.textContent = `${items.length} Result${items.length === 1 ? "" : "s"}`;
+      noResults.classList.toggle("hidden", items.length > 0);
+
+      grid.innerHTML = items.map((item) => {
+        const meta = pillarMeta[item.pillar];
+        const statBlock = item.keyStat
+          ? `<p class="mt-4 text-3xl font-extrabold text-sdNavy">${item.keyStat}</p>`
+          : "";
+        return `
+          <article class="result-card rounded-2xl border border-slate-200 bg-white shadow-card overflow-hidden">
+            <div class="h-2 ${meta.accent}" aria-hidden="true"></div>
+            <div class="p-5">
+              <p class="inline-flex ${meta.colorClass} text-xs uppercase tracking-[0.12em] font-bold rounded-full px-3 py-1">${meta.label}</p>
+              <h3 class="mt-4 text-xl font-extrabold text-sdInk leading-snug">${item.title}</h3>
+              ${statBlock}
+              <p class="mt-3 text-slate-700 leading-7">${item.teaser}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                ${item.tags.slice(0, 3).map((tag) => `<span class="text-xs rounded-full bg-slate-100 border border-slate-200 px-2.5 py-1 font-medium text-slate-600">${prettyTag(tag)}</span>`).join("")}
+              </div>
+              <button type="button" class="learn-more focus-ring mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-sdGold text-sdInk font-extrabold px-5 py-2.5 hover:brightness-95 transition min-h-[44px]" data-id="${item.id}" aria-label="Learn more about ${item.title}">
+                Learn More
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      grid.querySelectorAll(".learn-more").forEach((btn) => {
+        btn.addEventListener("click", () => openModal(btn.dataset.id));
+      });
+    }
+
+    function renderMapRegionState() {
+      activeRegionLabel.textContent = state.region
+        ? state.region.split(" ").map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
+        : "All Regions";
+      mapPins.forEach((pin) => {
+        const active = pin.dataset.region === state.region;
+        pin.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function renderAll() {
+      if (state.pillar === "all") {
+        state.tag = "";
+      }
+      renderSecondaryChips();
+      renderCards();
+      renderMapRegionState();
+      pillarButtons.forEach((btn) => {
+        const active = btn.dataset.pillar === state.pillar;
+        btn.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+    }
+
+    function openModal(id) {
+      const item = accomplishments.find((entry) => entry.id === id);
+      if (!item) return;
+      const meta = pillarMeta[item.pillar];
+      modalTitle.textContent = item.title;
+      modalPillar.textContent = meta.label;
+      modalStat.textContent = item.keyStat || "";
+      modalContent.textContent = item.fullText;
+      modalHeader.className = "px-6 py-4 border-b border-slate-200 flex items-center justify-between gap-4 bg-white";
+      modalHeader.style.boxShadow = `inset 0 4px 0 ${meta.accentHex}`;
+      modalPillar.style.color = meta.accentHex;
+      modalStat.style.color = meta.accentHex;
+      modalRoot.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open", "overflow-hidden");
+      modalRoot.classList.remove("pointer-events-none");
+      lastFocusedEl = document.activeElement;
+      window.setTimeout(() => modalClose.focus(), 30);
+    }
+
+    function closeModal() {
+      modalRoot.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open", "overflow-hidden");
+      modalRoot.classList.add("pointer-events-none");
+      if (lastFocusedEl instanceof HTMLElement) {
+        lastFocusedEl.focus();
+      }
+    }
+
+    function setupEvents() {
+      searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value || "";
+        renderCards();
+      });
+
+      pillarButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.pillar = btn.dataset.pillar;
+          state.tag = "";
+          renderAll();
+        });
+      });
+
+      mapToggle.addEventListener("click", () => {
+        state.mapView = !state.mapView;
+        mapToggle.setAttribute("aria-pressed", state.mapView ? "true" : "false");
+        mapPanel.classList.toggle("hidden", !state.mapView);
+      });
+
+      mapPins.forEach((pin) => {
+        pin.addEventListener("click", () => {
+          const region = pin.dataset.region;
+          state.region = state.region === region ? "" : region;
+          renderCards();
+          renderMapRegionState();
+        });
+      });
+
+      clearRegionBtn.addEventListener("click", () => {
+        state.region = "";
+        renderCards();
+        renderMapRegionState();
+      });
+
+      modalClose.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && document.body.classList.contains("modal-open")) {
+          closeModal();
+        }
+      });
+    }
+
+    function formatStatValue(value, format) {
+      switch (format) {
+        case "rangePercent":
+          return `25-${Math.round(value)}%`;
+        case "billions":
+          return `$${value.toFixed(1).replace(".0", "")} Billion+`;
+        case "rank":
+          return `#${Math.round(value)}`;
+        case "plusPercent":
+          return `${Math.round(value)}%+`;
+        case "millions":
+          return `$${Math.round(value)}M`;
+        default:
+          return String(Math.round(value));
+      }
+    }
+
+    function animateStats() {
+      const stats = Array.from(document.querySelectorAll(".stat-value"));
+      const section = document.getElementById("stats-grid");
+      let hasAnimated = false;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || hasAnimated) return;
+          hasAnimated = true;
+          stats.forEach((el, index) => {
+            const start = Number(el.dataset.start || 0);
+            const end = Number(el.dataset.end || 0);
+            const format = el.dataset.format || "";
+            const duration = 1100 + index * 120;
+            const startAt = performance.now() + index * 75;
+
+            function frame(now) {
+              const elapsed = Math.max(0, now - startAt);
+              const progress = Math.min(1, elapsed / duration);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              const value = start + (end - start) * eased;
+              el.textContent = formatStatValue(value, format);
+              if (progress < 1) requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
+          });
+          observer.disconnect();
+        });
+      }, { threshold: 0.35 });
+
+      observer.observe(section);
+    }
+
+    setupEvents();
+    renderAll();
+    animateStats();
+  </script>
+</body>
+</html>
